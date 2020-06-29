@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>IMTOB - Decal creator for Sauerbraten</title>
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="main.js" defer></script>
+	</head>
+
+	<body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="jszip.min.js"></script>
+		<h2>IMTOB <span style="font-size: 10px">Image to OBJ</span></h2>
+		<div style="margin: 20px">
+			<label class="inputlbls" id="uploadlbl">
+				<input style="display: none;" type="file" accept="image/*" id="fileinput" ><i id="imageicon" class="far fa-image" title="only images are allowed"></i> UPLOAD DECAL</input>
+			</label>
+			<button style="pointer-events: none; background-color: grey; user-select: none; color: #a8a8a8; background-color: #222633; font-size: 15px" id="downloadbtn" onclick="downloadzip()"><i id="imageicon" class="fa fa-download" title="download mapmodel as zip"></i> DOWNLOAD MODEL</button>
+		</div>
+		<canvas id="imagepreview" style="" width="128" height="128"></canvas>
+		<p>Model Configurations</p>
+		<div id="checkboxes"></div>
+		<br>
+		<p style="font-size: 15px"><i class="fas fa-grip-lines-vertical" id="iconpitch"></i><br>Pitch rotation <span id="iconpitchtext"></span></p>
+		<input type="range" min="0" max="90" oninput='updatepitchpreview(this.value, "rotate")' id="pitchvalue"></input>
+		<br>
+		<p style="font-size: 15px">Model Size</p>
+		<input id="imgsizew" class="sizeinput" placeholder="width" maxlength="4" size="4" oninput="keepaspect(0)">
+		<input id="imgsizeh" class="sizeinput" placeholder="height" maxlength="4" size="4" oninput="keepaspect(1)">
+		<img src="notexture.png" style="display: none"/>
+		<br>
+		<i class="fas fa-question-circle" id="helpbtn" onclick="togglehelp()"></i>
+		<div id="infos" style="display: none">
+			<div style="background-color: #13151cc2; padding: 15px; filter: drop-shadow(2px 4px 6px black); font-size: 13px; user-select: none;">
+				<p><strong>About IMTOB</strong></p>
+				<p>This is a simple tool that reads your image measurements and applies them to the <a href="https://en.wikipedia.org/wiki/Wavefront_.obj_file" target="_blank">.obj file</a>, which can then be loaded as a mapmodel in the <a href="http://sauerbraten.org" target="_blank">Sauerbraten</a> or other <a href="http://cubeengine.com/" target="_blank">Cube Engine</a> games.</p>
+				<hr>
+				<p><strong>Loading mapmodels in Sauerbraten</strong></p>
+				<p style="text-align: left">1: Download the .zip and move all the files to a new folder in <span style="color: #8e8e8e">sauerbraten/packages/models</span>.<br>2: Open your map and press <span style="color: #8e8e8e">F6</span> to open its configuration file.<br>3: Write the <span style="color: #8e8e8e">mmodel</span> command to load your model from the models folder (<span style="color: #8e8e8e">mmodel "your_model"</span>), save and execute.<br>4: In edit mode, press <span style="color: #8e8e8e">F4</span> to open the mapmodels menu, your decal should appear on the last page.</p>
+			</div>
+		</div>
+		<br>
+		<br>
+		<p style="text-align: center; font-size: 12px;"><a href="https://salatielsauer.github.io/">@SalatielSauer</a></p>
+	</body>
+</html>
