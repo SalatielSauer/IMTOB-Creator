@@ -1,23 +1,21 @@
 document.getElementById("pitchvalue").value = 0
-imageLoader = document.getElementById('fileinput');
+const imageLoader = document.getElementById('fileinput');
 imageLoader.addEventListener('change', importImg, false);
-
-uploadlbl = document.getElementById("uploadlbl");
-
-downloadbtn = document.getElementById("downloadbtn");
-imagepreview = document.getElementById("imagepreview");
-imagepreviewctx = imagepreview.getContext('2d');
+const uploadlbl = document.getElementById("uploadlbl");
+const downloadbtn = document.getElementById("downloadbtn");
+const imagepreview = document.getElementById("imagepreview");
+const imagepreviewctx = imagepreview.getContext('2d');
 imagepreviewctx.drawImage(document.getElementsByTagName("img").item("src"), 0, 0);
-imageinputsizew = document.getElementById("imgsizew");
-imageinputsizeh = document.getElementById("imgsizeh");
+const imageinputsizew = document.getElementById("imgsizew");
+const imageinputsizeh = document.getElementById("imgsizeh");
+const checkboxes = document.getElementById("checkboxes");
 
-checkboxes = document.getElementById("checkboxes");
-checkboxlist = ["objcullface", "mdlcollide", "objfullbright"]
+checkboxlist = ["objcullface *", "mdlcollide", "objfullbright *"]
 for (c = 0; c < checkboxlist.length; c++) { 
-	checkboxes.innerHTML += '<label class="checkboxlbls" onclick="checkbstate(' + c + ')"><input style="pointer-events: none" type="checkbox" name="' + checkboxlist[c] + '">' + checkboxlist[c].replace("obj", "").replace("mdl", "") + '</input></label>'
+	checkboxes.innerHTML += '<label class="checkboxlbls" onclick="checkbstate(' + c + ')"><input style="pointer-events: none" type="checkbox" name="' + checkboxlist[c] + '">' + checkboxlist[c].replace(/obj/g, "").replace(/mdl/g, "").replace(/\*/g, "") + '</input></label>'
 }
 function checkbstate(id, state) {
-	nitem = document.getElementsByTagName("input").namedItem(checkboxlist[id]);
+	const nitem = document.getElementsByTagName("input").namedItem(checkboxlist[id]);
 	if (state == 1) {
 		return ~~nitem.checked;
 	} else {
@@ -26,12 +24,12 @@ function checkbstate(id, state) {
 }
 
 function togglehelp() {
-	helpui = document.getElementById("infos");
+	const helpui = document.getElementById("infos");
 	if (helpui.style.display == "none") {helpui.style.display = "unset";} else {helpui.style.display = "none";}
 }
 
 function updatepitchpreview(value) {
-	ival = document.getElementById("iconpitch");
+	const ival = document.getElementById("iconpitch");
 	ival.style.transform = "rotate(" + value + "deg)";
 	itext = document.getElementById("iconpitchtext");
 	itext.innerText = "(" + value + ")";
@@ -78,7 +76,7 @@ function keepaspect(type) {
 var objoutput, cfgoutput, filename;
 function genobj(userfile, w, h) {
 	filename = userfile.name.replace(/\s/g, "_").substr(0, userfile.name.lastIndexOf("."));
-	objoutput = "# Generated with ITOBJ, a decal maker for Sauerbraten\n# By @SalatielSauer\no " + filename;
+	objoutput = "# Generated with IMTOB, a decal maker for Sauerbraten\n# salatielsauer.github.io/IMTOB-Creator\n# By @SalatielSauer\no " + filename;
 	objoutput += "\nv -" + w.value + " -" + h.value + " -0";
 	objoutput += "\nv " + w.value + " -" + h.value + " -0";
 	objoutput += "\nv -" + w.value + " " + h.value + " 0";
@@ -96,7 +94,7 @@ function downloadzip() {
 	//writing CFG
 	cfgoutput = "objload \"model.obj\"\nobjskin * \"skin.png\"\nmdlscale 5";
 	cfgoutput += "\nmdlpitch " + document.getElementById("pitchvalue").value + "\nobjalphatest * 0\n";
-	for (c = 0; c < checkboxlist.length; c++) {cfgoutput += checkboxlist[c] + " * " + checkbstate(c, 1) + "\n";};
+	for (c = 0; c < checkboxlist.length; c++) {cfgoutput += checkboxlist[c] + " " + checkbstate(c, 1) + "\n";};
 	
 	//saving ZIP
 	//skin
